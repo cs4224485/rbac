@@ -18,7 +18,8 @@ def customer_list(request):
     :return:
     """
     data_list = models.Customer.objects.all()
-    return render(request, 'customer_list.html', {'data_list': data_list})
+
+    return render(request, 'customer_list.html',locals())
 
 
 def customer_add(request):

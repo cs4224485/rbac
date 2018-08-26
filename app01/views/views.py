@@ -37,6 +37,16 @@ def login(request):
             # 构建权限，并保存到session
             permission.initial_session(request, permission_data)
 
+            # 权限菜单
+            permission_menu = user_obj.roles.filter(permissions__isnull=False).values("permissions__url","permissions__action", "permissions__title").distinct()
+
+            temp = []
+            for item in permission_menu:
+                if item["permissions__action"] == 'list':
+                    temp.append((item['permissions__url'], item['permissions__title']))
+
+            request.session['menu'] = temp
+
             '''
                     备注: 此方案信息不够需要重新构建
                     #将权限信息保存到session
